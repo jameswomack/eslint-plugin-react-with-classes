@@ -18,7 +18,7 @@ const parserOptions = {
 };
 
 const ruleTester = new RuleTester();
-ruleTester.run('no-unused-styles', rule, {
+ruleTester.run('no-unused-classes', rule, {
 
   valid: [
     {
@@ -500,6 +500,56 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
     },
+
+    {
+      parserOptions,
+      code: `
+        import React from 'react';
+        import { withStyles } from '@material-ui/core/styles';
+        
+        import Slider from '../../Slider/Slider';
+        
+        const CostSlider = ({ classes, name, rate, handleChange, isDirty }) => (
+          <div className={classes.root}>
+            <div className={classes.slider}>
+              <span className={classes.rate}>{name}</span>
+              <Slider disabled={isDirty} rate={rate} onUpdate={handleChange} />
+            </div>
+            <span className={classes.sellingPrice}></span>
+          </div>
+        );
+        
+        CostSlider.defaultProps = {
+          handleChange: () => {},
+        };
+        
+        export default withStyles(theme => ({
+          root: {
+            padding: '60px 10px 0px 10px',
+            margin: '20px 10px 20px 10px',
+            fontSize: '1rem',
+            flexGrow: 1,
+          },
+          rate: {
+            marginRight: '10px',
+            fontSize: '1rem',
+            color: '#A1A1A1',
+          },
+          slider: {
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px',
+            marginBottom: '30px',
+            alignItems: 'center',
+          },
+          sellingPrice: {
+            textAlign: 'center',
+            display: 'block',
+            fontWeight: 'bold',
+          },
+        }))(CostSlider);
+      `.trim(),
+    },
   ],
 
   invalid: [
@@ -521,6 +571,65 @@ ruleTester.run('no-unused-styles', rule, {
       `.trim(),
       errors: [{
         message: 'Class `bar` is unused',
+        type: 'Property',
+      }],
+    },
+
+    {
+      parserOptions,
+      code: `
+        import React from 'react';
+        import { withStyles } from '@material-ui/core/styles';
+        
+        import Slider from '../../Slider/Slider';
+        
+        const CostSlider = ({ classes, name, rate, handleChange, isDirty }) => (
+          <div className={classes.root}>
+            <div className={classes.slider}>
+              <span className={classes.rate}>{name}</span>
+              <Slider disabled={isDirty} rate={rate} onUpdate={handleChange} />
+            </div>
+            <span className={classes.sellingPrice}></span>
+          </div>
+        );
+        
+        CostSlider.defaultProps = {
+          handleChange: () => {},
+        };
+        
+        export default withStyles(theme => ({
+          root: {
+            padding: '60px 10px 0px 10px',
+            margin: '20px 10px 20px 10px',
+            fontSize: '1rem',
+            flexGrow: 1,
+          },
+          rate: {
+            marginRight: '10px',
+            fontSize: '1rem',
+            color: '#A1A1A1',
+          },
+          rate2: {
+            marginRight: '10px',
+            fontSize: '1rem',
+            color: '#A1A1A1',
+          },
+          slider: {
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px',
+            marginBottom: '30px',
+            alignItems: 'center',
+          },
+          sellingPrice: {
+            textAlign: 'center',
+            display: 'block',
+            fontWeight: 'bold',
+          },
+        }))(CostSlider);
+      `.trim(),
+      errors: [{
+        message: 'Class `rate2` is unused',
         type: 'Property',
       }],
     },

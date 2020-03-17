@@ -12,7 +12,7 @@ ESLint plugin for [mui-withstyles][mui-withstyles].
 
 ## Rules
 
-- [react-with-classes/no-unused-styles](docs/rules/no-unused-styles.md): Require all styles that are defined to be referenced
+- [react-with-classes/no-unused-classes](docs/rules/no-unused-classes.md): Require all styles that are defined to be referenced
 
 [package-url]: https://npmjs.org/package/eslint-plugin-react-with-classes
 [npm-version-svg]: http://versionbadg.es/jameswomack/eslint-plugin-react-with-classes.svg
