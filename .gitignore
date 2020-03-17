@@ -1,3 +1,7 @@
+# VS Code
+.vscode/
+eslint-plugin-react-with-classes.code-workspace
+
 # Logs
 logs
 *.log

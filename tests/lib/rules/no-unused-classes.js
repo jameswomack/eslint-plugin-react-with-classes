@@ -1,13 +1,13 @@
 /**
 * @fileoverview Require that all styles that are defined are also referenced in the same file
-* @author Joe Lencioni
+* @author James Womack
 */
 
 'use strict';
 
 const RuleTester = require('eslint').RuleTester;
 
-const rule = require('../../../lib/rules/no-unused-styles');
+const rule = require('../../../lib/rules/no-unused-classes');
 
 const parserOptions = {
   ecmaVersion: 2019,
@@ -24,7 +24,7 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
         <div className="foo" />
       `.trim(),
     },
@@ -32,19 +32,19 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
-        const foo = props.styles;
+        import { withStyles } from '@material-ui/core/styles';
+        const foo = props.classes;
       `.trim(),
     },
 
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -57,11 +57,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles['foo'])} />
+            <div className={classes['foo']} />
           );
         }
 
@@ -74,11 +74,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles[\`foo\`])} />
+            <div className={classes[\`foo\`]} />
           );
         }
 
@@ -91,11 +91,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.styles.foo)} />
+            <div className={props.classes.foo} />
           );
         }
 
@@ -108,11 +108,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.styles['foo'])} />
+            <div className={props.classes['foo']} />
           );
         }
 
@@ -125,11 +125,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props['styles'].foo)} />
+            <div className={props['classes'].foo} />
           );
         }
 
@@ -142,11 +142,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props['styles']['foo'])} />
+            <div className={props['classes']['foo']} />
           );
         }
 
@@ -159,11 +159,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.styles[\`foo\`])} />
+            <div className={props.classes[\`foo\`]} />
           );
         }
 
@@ -176,11 +176,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props[\`styles\`].foo)} />
+            <div className={props[\`classes\`].foo} />
           );
         }
 
@@ -193,11 +193,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props[\`styles\`][\`foo\`])} />
+            <div className={props[\`classes\`][\`foo\`]} />
           );
         }
 
@@ -210,11 +210,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this.props.styles.foo)} />;
+            return <div className={this.props.classes.foo} />;
           }
         }
 
@@ -227,11 +227,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this.props.styles['foo'])} />;
+            return <div className={this.props.classes['foo']} />;
           }
         }
 
@@ -244,11 +244,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this.props['styles']['foo'])} />;
+            return <div className={this.props['classes']['foo']} />;
           }
         }
 
@@ -261,11 +261,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this['props'].styles['foo'])} />;
+            return <div className={this['props'].classes['foo']} />;
           }
         }
 
@@ -278,11 +278,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this['props']['styles']['foo'])} />;
+            return <div className={this['props']['classes']['foo']} />;
           }
         }
 
@@ -295,11 +295,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this.props.styles[\`foo\`])} />;
+            return <div className={this.props.classes[\`foo\`]} />;
           }
         }
 
@@ -312,11 +312,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this.props[\`styles\`][\`foo\`])} />;
+            return <div className={this.props[\`classes\`][\`foo\`]} />;
           }
         }
 
@@ -329,11 +329,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this[\`props\`].styles[\`foo\`])} />;
+            return <div className={this[\`props\`].classes[\`foo\`]} />;
           }
         }
 
@@ -346,11 +346,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            return <div {...css(this[\`props\`][\`styles\`][\`foo\`])} />;
+            return <div className={this[\`props\`][\`classes\`][\`foo\`]} />;
           }
         }
 
@@ -364,12 +364,12 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
-            const { styles } = this.props;
-            return <div {...css(styles.foo)} />;
+            const { classes } = this.props;
+            return <div className={classes.foo} />;
           }
         }
 
@@ -382,11 +382,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
-          const something = isActive ? styles.foo : null;
-          return <div {...css(something)} />;
+        function Foo({ classes }) {
+          const something = isActive ? classes.foo : null;
+          return <div className={something} />;
         }
 
         export default withStyles(() => ({
@@ -398,9 +398,9 @@ ruleTester.run('no-unused-styles', rule, {
     { // TODO handle computed properties better?
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
             <div />
           );
@@ -415,9 +415,9 @@ ruleTester.run('no-unused-styles', rule, {
     { // TODO handle object spread better?
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
             <div />
           );
@@ -432,11 +432,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -451,11 +451,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo, styles.bar)} />
+            <div className={classes.foo, classes.bar} />
           );
         }
 
@@ -469,12 +469,12 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)}>
-              <div {...css(styles.bar)} />
+            <div className={classes.foo}>
+              <div className={classes.bar} />
             </div>
           );
         }
@@ -489,9 +489,9 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        function Foo({ css, styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -506,11 +506,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -520,7 +520,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `bar` is unused',
+        message: 'Class `bar` is unused',
         type: 'Property',
       }],
     },
@@ -528,11 +528,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
-        function Foo({ styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -544,7 +544,7 @@ ruleTester.run('no-unused-styles', rule, {
         })(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `bar` is unused',
+        message: 'Class `bar` is unused',
         type: 'Property',
       }],
     },
@@ -552,12 +552,12 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         class Foo extends React.Component {
           render() {
             return (
-              <div {...css(this.props.nonsense.foo)} />
+              <div className={this.props.nonsense.foo} />
             );
           }
         }
@@ -567,7 +567,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `foo` is unused',
+        message: 'Class `foo` is unused',
         type: 'Property',
       }],
     },
@@ -575,11 +575,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.nonsense.foo)} />
+            <div className={props.nonsense.foo} />
           );
         }
 
@@ -588,7 +588,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `foo` is unused',
+        message: 'Class `foo` is unused',
         type: 'Property',
       }],
     },
@@ -596,11 +596,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.styles.foo.bar)} />
+            <div className={props.classes.foo.bar} />
           );
         }
 
@@ -609,7 +609,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `bar` is unused',
+        message: 'Class `bar` is unused',
         type: 'Property',
       }],
     },
@@ -617,11 +617,11 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        import { css } from 'withStyles';
+        import { withStyles } from '@material-ui/core/styles';
 
         function Foo(props) {
           return (
-            <div {...css(props.props.props.styles.foo)} />
+            <div className={props.props.props.classes.foo} />
           );
         }
 
@@ -630,7 +630,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `foo` is unused',
+        message: 'Class `foo` is unused',
         type: 'Property',
       }],
     },
@@ -638,9 +638,9 @@ ruleTester.run('no-unused-styles', rule, {
     {
       parserOptions,
       code: `
-        function Foo({ css, styles }) {
+        function Foo({ classes }) {
           return (
-            <div {...css(styles.foo)} />
+            <div className={classes.foo} />
           );
         }
 
@@ -650,7 +650,7 @@ ruleTester.run('no-unused-styles', rule, {
         }))(Foo);
       `.trim(),
       errors: [{
-        message: 'Style `bar` is unused',
+        message: 'Class `bar` is unused',
         type: 'Property',
       }],
     },

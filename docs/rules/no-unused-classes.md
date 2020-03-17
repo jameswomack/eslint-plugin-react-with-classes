@@ -5,9 +5,9 @@
 The following patterns are considered warnings:
 
 ``` jsx
-function MyComponent({ styles }) {
+function MyComponent({ classes }) {
   return (
-    <div {...css(styles.foo)}>
+    <div className={classes.foo}>
       Foo
     </div>
   );
@@ -27,9 +27,9 @@ export default withStyles(() => ({
 The following patterns are not warnings:
 
 ``` jsx
-function MyComponent({ styles }) {
+function MyComponent({ classes }) {
   return (
-    <div {...css(styles.foo)}>
+    <div className={classes.foo}>
       Foo
     </div>
   );
@@ -47,4 +47,4 @@ export default withStyles(() => ({
 - Will not detect styles defined by computed properties.
 - Will not detect styles defined by object spread.
 - Will not handle files that contain multiple styled components very well.
-- Will not handle `styles` prop that has been renamed to something else.
+- Will not handle `classes` prop that has been renamed to something else.
