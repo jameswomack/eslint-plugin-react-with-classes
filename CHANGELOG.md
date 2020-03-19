@@ -1,3 +1,7 @@
+## v1.0.0-alpha.3
+
+feat: add 'ignore' option array
+
 ## v1.0.0-alpha.2
 
 fix: Don't double-prepend path

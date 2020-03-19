@@ -42,6 +42,31 @@ export default withStyles(() => ({
 }))(MyComponent);
 ```
 
+Examples of **correct** code for this rule with the `ignore: ['foo']` option:
+
+```jsx
+/*eslint react-with-classes/no-unused-classes: ["error", {"ignore": ['rule2]}]*/
+
+const styles = () => ({
+  foo: {
+    backgroundColor: 'red',
+  },
+  rule2: {
+    backgroundColor: 'red',
+  },
+};
+
+function MyComponent({ classes }) {
+  return (
+    <div className={classes.foo}>
+      Foo
+    </div>
+  );
+}
+
+export default withStyles(styles)(MyComponent);
+```
+
 ## Known limitations
 
 - Will not detect styles defined by computed properties.
