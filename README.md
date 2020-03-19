@@ -14,6 +14,14 @@ ESLint plugin for [mui-withstyles][mui-withstyles].
 
 - [react-with-classes/no-unused-classes](docs/rules/no-unused-classes.md): Require all styles that are defined to be referenced
 
+## Caveats
+
+- If not passed directly to `withStyles`, `theme => ({ ... })` calls must be named `styles` whether they're declared inline or default-exported from another module
+
+## Examples
+
+- See the tests for valid/invalid cases
+
 [package-url]: https://npmjs.org/package/eslint-plugin-react-with-classes
 [npm-version-svg]: http://versionbadg.es/jameswomack/eslint-plugin-react-with-classes.svg
 [travis-svg]: https://travis-ci.org/jameswomack/eslint-plugin-react-with-classes.svg
