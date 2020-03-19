@@ -45,7 +45,7 @@ export default withStyles(() => ({
 Examples of **correct** code for this rule with the `ignore: ['foo']` option:
 
 ```jsx
-/*eslint react-with-classes/no-unused-classes: ["error", {"ignore": ['rule2]}]*/
+/*eslint react-with-classes/no-unused-classes: ["error", {"ignore": ["rule2"]}]*/
 
 const styles = () => ({
   foo: {
