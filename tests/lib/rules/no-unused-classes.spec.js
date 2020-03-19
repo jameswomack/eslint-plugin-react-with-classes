@@ -550,6 +550,34 @@ ruleTester.run('no-unused-classes', rule, {
         }))(CostSlider);
       `.trim(),
     },
+
+    {
+      parserOptions,
+      code: `
+        import React from 'react';
+        import { withStyles } from '@material-ui/core/styles';        
+        import Slider from '../../Slider/Slider';
+        import styles from './styles/CostSlider';
+        
+        const CostSlider = ({ classes, name, rate, handleChange, isDirty }) => (
+          <div className={classes.root}>
+            <div className={classes.slider}>
+              <span className={classes.rate}>{name}</span>
+              <span className={classes.rate2}>{name}</span>
+              <Slider disabled={isDirty} rate={rate} onUpdate={handleChange} />
+            </div>
+            <span className={classes.sellingPrice}></span>
+          </div>
+        );
+        
+        CostSlider.defaultProps = {
+          handleChange: () => {},
+        };
+        
+        export default withStyles(styles)(CostSlider);
+      `.trim(),
+      filename: './tests/lib/rules/no-unused-classes.js',
+    },
   ],
 
   invalid: [
@@ -628,6 +656,98 @@ ruleTester.run('no-unused-classes', rule, {
           },
         }))(CostSlider);
       `.trim(),
+      errors: [{
+        message: 'Class `rate2` is unused',
+        type: 'Property',
+      }],
+    },
+
+    {
+      parserOptions,
+      code: `
+        import React from 'react';
+        import { withStyles } from '@material-ui/core/styles';
+        
+        import Slider from '../../Slider/Slider';
+
+        const styles = theme => ({
+          root: {
+            padding: '60px 10px 0px 10px',
+            margin: '20px 10px 20px 10px',
+            fontSize: '1rem',
+            flexGrow: 1,
+          },
+          rate: {
+            marginRight: '10px',
+            fontSize: '1rem',
+            color: '#A1A1A1',
+          },
+          rate2: {
+            marginRight: '10px',
+            fontSize: '1rem',
+            color: '#A1A1A1',
+          },
+          slider: {
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px',
+            marginBottom: '30px',
+            alignItems: 'center',
+          },
+          sellingPrice: {
+            textAlign: 'center',
+            display: 'block',
+            fontWeight: 'bold',
+          },
+        });
+        
+        const CostSlider = ({ classes, name, rate, handleChange, isDirty }) => (
+          <div className={classes.root}>
+            <div className={classes.slider}>
+              <span className={classes.rate}>{name}</span>
+              <Slider disabled={isDirty} rate={rate} onUpdate={handleChange} />
+            </div>
+            <span className={classes.sellingPrice}></span>
+          </div>
+        );
+        
+        CostSlider.defaultProps = {
+          handleChange: () => {},
+        };
+        
+        export default withStyles(styles)(CostSlider);
+      `.trim(),
+      errors: [{
+        message: 'Class `rate2` is unused',
+        type: 'Property',
+      }],
+    },
+
+    {
+      parserOptions,
+      code: `
+        import React from 'react';
+        import { withStyles } from '@material-ui/core/styles';        
+        import Slider from '../../Slider/Slider';
+        import styles from './styles/CostSlider';
+        
+        const CostSlider = ({ classes, name, rate, handleChange, isDirty }) => (
+          <div className={classes.root}>
+            <div className={classes.slider}>
+              <span className={classes.rate}>{name}</span>
+              <Slider disabled={isDirty} rate={rate} onUpdate={handleChange} />
+            </div>
+            <span className={classes.sellingPrice}></span>
+          </div>
+        );
+        
+        CostSlider.defaultProps = {
+          handleChange: () => {},
+        };
+        
+        export default withStyles(styles)(CostSlider);
+      `.trim(),
+      filename: './tests/lib/rules/no-unused-classes.js',
       errors: [{
         message: 'Class `rate2` is unused',
         type: 'Property',
